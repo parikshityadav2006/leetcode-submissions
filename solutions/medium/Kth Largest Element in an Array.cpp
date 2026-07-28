@@ -3,34 +3,35 @@
             // Language: C++
             // Link: https://leetcode.com/problems/kth-largest-element-in-an-array/
 
-        int pivot = nums[rand() % nums.size()];
-        
-        vector<int> left;
-        vector<int> mid;
-        vector<int> right;
-        
-        for (int num: nums) {
-            if (num > pivot) {
-                left.push_back(num);
-            } else if (num < pivot) {
-                right.push_back(num);
+        // [lt, i-1]   -> elements == pivot
+        // [i, gt]     -> unprocessed
+        // [gt+1, high]  -> elements < pivot
+        while (i <= gt) {
+            if (nums[i] > pivot) {
+                swap(nums[i], nums[lt]);
+                lt++;
+                i++;
+            } else if (nums[i] < pivot) {
+                swap(nums[i], nums[gt]);
+                gt--;
             } else {
-                mid.push_back(num);
+                i++;
             }
         }
         
-        if (k <= left.size()) {
-            return quickSelect(left, k);
-        }
+        int leftSize = lt - low;       // count of elements > pivot
+        int midSize = gt - lt + 1;    // count of elements == pivot
         
-        if (left.size() + mid.size() < k) {
-            return quickSelect(right, k - left.size() - mid.size());
-        }
-        
-        return pivot;
-        
+        int i = low, lt = low, gt = high;
+        // Invariant during the lowop:
+        // [low, lt-1]  -> elements > pivot
+    int findKthLargest(vector<int>& nums, int k) {
+        return quickSelect(nums, 0, nums.size() - 1, k);
     }
-};
-    int quickSelect(vector<int>& nums, int k) {
     
-    }
+    int quickSelect(vector<int>& nums, int low, int high, int k) {
+        int pivotIndex = low + rand() % (high - low + 1);
+        int pivot = nums[pivotIndex];
+        
+class Solution {
+public:
