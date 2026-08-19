@@ -3,35 +3,34 @@
             // Language: C++
             // Link: https://leetcode.com/problems/graph-valid-tree/
 
-    bool validTree(int n, vector<vector<int>>& edges) {
-        vector<vector<int>> adj(n,vector<int>(0));
-        vector<int> visited(n,0);
-        unordered_set<int> notRoots;
         
-        for(auto i : edges){
-            adj[i[0]].push_back(i[1]);
-            adj[i[1]].push_back(i[0]);
-            notRoots.insert(i[1]); 
+        // Make the adjacency list.
+        for (auto& edge : edges) {
+            adjacencyList[edge[0]].push_back(edge[1]);
+            adjacencyList[edge[1]].push_back(edge[0]);
         }
         
-        int root=-1;
-        for(int i=0;i<n;i++){
-            if(notRoots.count(i)==0){
-                root=i;
-                break;
-            }
-        }
-        if(root==-1) return false;
-        
-        bool ans= dfs(root,root,adj,visited);
-
-        for(auto i: visited){
-            if(i==0) return false; // if tree isnt entirely explorable through one 
-            node, there exists multiple trees
-        }
-    }
-        return ans;
-};
+        if ((int)edges.size() != n - 1) return false;
 public:
+    vector<vector<int>> adjacencyList;
+        
+
+        if (seen.count(node)) return;
+        seen.insert(node);
+        for (int neighbour : adjacencyList[node]) {
+            dfs(neighbour);
+        }
     }
-        return true;
+        // Carry out depth first search.
+        dfs(0);
+        // Inspect result and return the verdict.
+        return (int)seen.size() == n;
+    }
+    
+    unordered_set<int> seen;
+    bool validTree(int n, vector<vector<int>>& edges) {
+    void dfs(int node) {
+private:
+class Solution {
+        adjacencyList.resize(n);
+};
