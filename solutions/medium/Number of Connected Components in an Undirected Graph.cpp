@@ -3,35 +3,35 @@
             // Language: C++
             // Link: https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/
 
-    bool common(vector<int>& a, vector<int>& b){
-        for(int i=0;i<a.size();i++){
-            for(int j=0;j<b.size();j++){
-                if(a[i]==b[j]) return true;
-            }
-        }
-        return false;
     }
+        if(rank[rx]<rank[ry]) swap(rx,ry);
+        if(rx==ry) return false;
+        parent[ry]=rx;
+        rank[rx]++;
+        return true;
+        components--;
+
+    bool connected(int x,int y){
+        return find(x)==find(y);
+    }
+
+    int numComponents(){
+        return components;
+    }
+};
+class Solution {
 public:
     int countComponents(int n, vector<vector<int>>& edges) {
-        for(int i=0;i<edges.size();i++){
-            int flag=0; // if merging takes place, i-- to check all possible 
-            mergings in next iteration 
-            for(int j=i+1;j<edges.size();j++){
-                if(common(edges[i],edges[j])){
-                    flag=1;
-                    merge(edges,edges[i],edges[j],j);
-                    j--;
-                }
-            }
-        if(flag) i--;
-        }
-        
-        unordered_set<int> connected;
-        for(int i=0;i<edges.size();i++){
-            for(int j: edges[i]){
-                connected.insert(j);
-            }
+        UnionFind graphs(n);
+
+        for(auto& edge: edges){
+            graphs.unite(edge[0],edge[1]);
         }
 
-        int isolated=0;
-        for(int i=0;i<n;i++){
+        int ry=find(y);
+        int rx=find(x);
+    bool unite(int x, int y){
+
+    }
+        return find(parent[node]);
+        if(parent[node]==node) return node;
