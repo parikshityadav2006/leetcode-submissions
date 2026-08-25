@@ -3,35 +3,34 @@
             // Language: C++
             // Link: https://leetcode.com/problems/min-cost-to-connect-all-points/
 
-        while(!pq.empty()){
-            auto [currDist,currPoint] =pq.top();
-            pq.pop();
+        
+        while (edgesUsed < n) {
+            int currMinEdge = INT_MAX;
+            int currNode = -1;
             
-
-            for(auto [point,dist]: adj[currPoint]){
-                if(visited[point]) continue;
-                pq.push({dist,point});
+            // Pick least weight node which is not in MST.
+            for (int node = 0; node < n; ++node) {
+                if (!inMST[node] && currMinEdge > minDist[node]) {
+                    currMinEdge = minDist[node];
+                    currNode = node;
+                }
+            }
+            
+            mstCost += currMinEdge;
+            edgesUsed++;
+            inMST[currNode] = true;
+            
+            // Update adjacent nodes of current node.
+            for (int nextNode = 0; nextNode < n; ++nextNode) {
+                int weight = abs(points[currNode][0] - points[nextNode][0]) + 
+                             abs(points[currNode][1] - points[nextNode][1]);
                 
+                if (!inMST[nextNode] && minDist[nextNode] > weight) {
+                    minDist[nextNode] = weight;
+                }
             }
         }
-        return mstDist;
+        
+        return mstCost;
     }
-public:
-    int minCostConnectPoints(vector<vector<int>>& points) {
-        unordered_map<int,vector<pair<int,int>>> adj;
-        int mstDist=0;
-        
-        vector<int> visited(n,0);
-
-        pq.push({0,0});
-            visited[currPoint]=1;
-            
-            if(visited[currPoint]) continue;
-            mstDist+=currDist;
-        int>>> pq;
-    int prim(int n, unordered_map<int,vector<pair<int,int>>>& adj){
-        
-        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,
-class Solution {
-private:
-        for(int i=0;i<points.size();i++){
+};
