@@ -3,16 +3,31 @@
             // Language: C++
             // Link: https://leetcode.com/problems/coin-change/
 
-class Solution {
+        // Each choice of coin reduces the problem of remaining to a 
+        smaller subproblem: remaining - c
+        for (int c : coins) {
+            int r = solve(coins, remaining - c);   // recurse DOWN 
+            toward 0
+
+            // Only fold this option into `best` if that subproblem was 
+
+        int best = INT_MAX;
+
+        if (memo.count(remaining)) return memo[remaining];
+            solvable
+            if (r != INT_MAX) best = min(best, r + 1);  // +1 for the 
+            coin we just used
+        }
+
+        different combination of coins): reuse result
+        // Cache and return — this is what makes it O(amount * coins.size
+        ()), every distinct `remaining` is solved once
+        return memo[remaining] = best;
+    }
+
 public:
     int coinChange(vector<int>& coins, int amount) {
-        vector<int> memo(amount+1,INT_MAX);
-        memo[0]=0;
-        for(int i=0;i<=amount;i++){
-            for(auto coin: coins){
-              if(coin < memo.size()-i && memo[i]!=INT_MAX) memo[i+coin]=min(memo[i+coin],memo[i]+1);  
-            }
-        }
-        return memo[amount]==INT_MAX ? -1 : memo[amount];
+        int res = solve(coins, amount);   
+        return res == INT_MAX ? -1 : res;
     }
 };
