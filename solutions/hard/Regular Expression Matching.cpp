@@ -3,33 +3,26 @@
             // Language: C++
             // Link: https://leetcode.com/problems/regular-expression-matching/
 
-        if (textIndex < textLength) {
-            if (token.letter == '.') charsAvailable = textLength - textIndex;               // 
-            '.' can cross runs
-            else if (text[textIndex] == token.letter) charsAvailable = sameLetterRunLength
-            [textIndex];  // letters stay inside one run
-        }
-
-        int maxCharsToTake = token.canTakeMore ? charsAvailable : token.minCount;
-        for (int charsToTake = token.minCount; charsToTake <= maxCharsToTake && charsToTake <= 
-        charsAvailable; charsToTake++)
-            if (canMatch(tokenIndex + 1, textIndex + charsToTake)) return cached = 1;
-        return cached = 0;
-    }
-
+class Solution {
 public:
-    bool isMatch(string inputText, string pattern) {
-        text = inputText;
-        textLength = text.size();
+    bool isMatch(string text, string pattern) {
+        if (pattern.empty())
+             (pattern[0] == text[0] || pattern[0] == '.'));
 
-        // run-length info for text, stored as "run remaining" per position
-        sameLetterRunLength.assign(textLength + 1, 0);
-        for (int i = textLength - 1; i >= 0; i--)
-            sameLetterRunLength[i] = (i + 1 < textLength && text[i] == text[i + 1]) ? 
-            sameLetterRunLength[i + 1] + 1 : 1;
+        if (pattern.length() >= 2 && pattern[1] == '*') {
+            return (
+            return text.empty();
 
-        patternTokens = encodePattern(pattern);
-        cache.assign(patternTokens.size(), vector<int>(textLength + 1, -1));
-        return canMatch(0, 0);
+        bool first_match =
+            (!text.empty() &&
+                isMatch(text, pattern.substr(2)) ||
+                (first_match && isMatch(text.substr(1), pattern))
+            );
+        } else {
+            return (
+                first_match &&
+                isMatch(text.substr(1), pattern.substr(1))
+            );
+        }
     }
 };
