@@ -3,33 +3,25 @@
             // Language: C++
             // Link: https://leetcode.com/problems/detect-squares/
 
-    
-    void add(vector<int> point) {
-        freq[{point[0],point[1]}]++;
-    }
-    
-    int count(vector<int> point) {
-        int count=0;
-    return count;
-            if(freq[{i,point[1]}] && i!=point[0]) X.push_back(i);
-        for(int i=0; i<=1000; i++){
+        for (int x = 0; x <= 1000; x++) {
+            if (x == px || cnt[x][py] == 0) continue;   // (x, py) is the horizontal neighbor
+            int d = abs(x - px);                        // side length
+            if (py + d <= 1000)                         // square above
+                res += cnt[x][py] * cnt[px][py + d] * cnt[x][py + d];
+            if (py - d >= 0)                            // square below
+                res += cnt[x][py] * cnt[px][py - d] * cnt[x][py - d];
         }
-        vector<int> X, Y;
-            if(freq[{point[0],i}] && i!=point[1]) Y.push_back(i); 
-        for(auto absc: X){
-            for(auto ord: Y){
-        }
-                if(abs(absc-point[0])==abs(ord-point[1]) && freq[{absc,ord}]){
-            }
-                    count+=freq[{absc,point[1]}]*freq[{point[0],ord}]*freq[{absc,ord}];
-                }
+        return res;
     }
 };
+class DetectSquares {
+    int cnt[1001][1001] = {};   // cnt[x][y] = how many times (x,y) was added
+public:
     DetectSquares() {}
 
-/**
- * Your DetectSquares object will be instantiated and called as such:
- * DetectSquares* obj = new DetectSquares();
- * obj->add(point);
- * int param_2 = obj->count(point);
- */
+    void add(vector<int> point) {
+        cnt[point[0]][point[1]]++;
+    }
+
+    int count(vector<int> point) {
+        int px = point[0], py = point[1], res = 0;
